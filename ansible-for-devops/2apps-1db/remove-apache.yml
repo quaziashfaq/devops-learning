@@ -1,0 +1,15 @@
+---
+- hosts: app
+  become: yes
+
+  tasks:
+    - name: Remove Apache
+      dnf:
+        name:
+          - httpd
+          - httpd-devel
+        state: absent
+
+    - name: Reboot machine
+      reboot:
+        msg: "Rebooting machine in 5 seconds"
