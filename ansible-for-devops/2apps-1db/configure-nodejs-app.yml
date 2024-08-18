@@ -11,29 +11,16 @@
         name: epel-release
         state: present
 
-    - name: Update ca-certificates
-      yum: 
-        name: ca-certificates 
-        state: latest
-
-    - name: Copy remirepo cert
-      copy:
-        src: remirepo.crt 
-        dest: /etc/pki/ca-trust/source/anchors/
-
-    - name: Update ca trust
-      ansible.builtin.command:
-        cmd: update-ca-trust
-        
-
     - name: Import Remi GPG key
       rpm_key:
         key: "https://rpms.remirepo.net/RPM-GPG-KEY-remi2018"
+        validate_certs: false
         state: present
 
     - name: Install Remi repo
       dnf:
         name: "https://rpms.remirepo.net/enterprise/remi-release-8.rpm"
+        validate_certs: false
         state: present
 
     - name: Ensure firewalld is stopped (for testing)
@@ -56,7 +43,7 @@
     - name: Ensure Node.js app folder exists
       file:
         path: "{{ node_apps_location }}"
-        satte: directory
+        state: directory
 
     - name: copy example node.js app to server
       copy:
@@ -70,8 +57,8 @@
     - name: Check list of running node.js apps
       ansible.builtin.command: 
         cmd: /usr/local/bin/forever list
-        register: forever_list
-        changed_when: false
+      register: forever_list
+      changed_when: false
 
     - name: start example node.js app
       command: "/usr/local/bin/forever start {{ node_apps_location }}/app/app.js"
