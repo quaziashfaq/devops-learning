@@ -11,7 +11,6 @@
         name: epel-release
         state: present
 
-<<<<<<<< HEAD:ansible-for-devops/2apps-1db-v1/configure-nodejs-app.yml
 #    - name: Update ca-certificates
 #      yum: 
 #        name: ca-certificates 
@@ -27,8 +26,6 @@
 #        cmd: update-ca-trust
         
 
-========
->>>>>>>> af9a8e0acec5d1069d5e286f86ceae7e3e988285:ansible-for-devops/2apps-1db-v2/configure-nodejs-app.yml
     - name: Import Remi GPG key
       rpm_key:
         key: "https://rpms.remirepo.net/RPM-GPG-KEY-remi2018"
