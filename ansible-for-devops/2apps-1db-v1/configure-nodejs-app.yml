@@ -43,32 +43,11 @@
         name: firewalld
         state: stopped
 
-    # setcap command is required to run the node application at port 80 by user
-    - name: Install libcap
-      dnf:
-        name: dnf
-        state: present
-        enablerepo: epel
-
     - name: Install Node.js and npm
       dnf:
         name: npm
         state: present
         enablerepo: epel
-
-    - name: copy setcap command
-      copy:
-        src: command
-        dest: "{{ node_apps_location }}"
-
-    - name: change permission
-      file:
-        dest: "{{ node_apps_location }}/command/setcap.sh"
-        mode: "a+x"
-
-    - name: run the setcap.sh command
-      ansible.builtin.command: 
-        cmd: "{{ node_apps_location }}/command/setcap.sh"
 
     - name: Install Forever (to run Node.js app)
       npm:
